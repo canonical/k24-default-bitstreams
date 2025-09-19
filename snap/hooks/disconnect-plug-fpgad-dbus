@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+echo "disabling <provider-app> on startup"
+# if names of <provider-snap> == <provider-app> then `<provider-snap>` is enough here,
+# instead of <provider-snap>.<provider-app>
+snapctl stop <provider-snap>.<provider-app> --disable
+echo "<provider-app> disabled on startup"
