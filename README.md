@@ -1,5 +1,15 @@
 # k24-default-bitstreams
 
+
+# dependencies
+sbusc++: https://github.com/Kistler-Group/sdbus-cpp
+
+On Ubuntu, install via
+```shell
+sudo apt update
+sudo apt install libsdbus-c++-dev
+```
+
 This repo is for a snap application which connects with fpgad to load a bitstream to the fpga0 device.
 The contained bitstream is a fan controller for the `K*24*` series of Xilinx boards.
 
@@ -25,7 +35,7 @@ plugs:
 but it must also be added to the application:
 ```yaml
 apps:
-  k26-default-bitstreams:
+  k24-default-bitstreams:
     command: bin/k24-default-bitstreams
     daemon: oneshot
     plugs:

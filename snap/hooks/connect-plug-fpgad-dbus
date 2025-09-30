@@ -2,8 +2,6 @@
 
 set -e
 
-echo "enabling <provider-app> on startup"
-# if names of <provider-snap> == <provider-app> then `<provider-snap>` is enough here,
-# instead of <provider-snap>.<provider-app>
-snapctl start --enable <provider-snap>.<provider-app>
-echo "<provider-app> enabled on startup"
+echo "enabling k24-default-bitstreams on startup"
+snapctl start --enable k24-default-bitstreams
+echo "k24-default-bitstreams enabled on startup"
