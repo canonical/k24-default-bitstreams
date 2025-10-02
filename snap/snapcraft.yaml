@@ -14,7 +14,7 @@ plugs:
     name: com.canonical.fpgad
 apps:
   k24-default-bitstreams:
-    command: bin/k24-default-bitstreams
+    command: bin/k24_default_bitstreams
     daemon: oneshot
     plugs:
       - fpgad-dbus
@@ -29,19 +29,23 @@ parts:
       - jq
     override-pull: |
       craftctl default
-      cargo_version=$(cargo metadata --no-deps --format-version 1 | jq -r .packages[0].version)
-      craftctl set version="$cargo_version+git$(date +'%Y%m%d').$(git describe --always --exclude '*')"
-  k26-default-bitstreams:
+      current_version=0.1.0 # todo: automatic updating of version
+      craftctl set version="$current_version+git$(date +'%Y%m%d').$(git describe --always --exclude '*')"
+  k24-default-bitstreams:
+    build-packages:
+      - pkg-config
+      - libglib2.0-dev
+    stage-packages:
+      - libglib2.0-0
     plugin: cmake
     source: ./k24-default-bitstreams
-    rust-path:
-      - k26-default-bitstreams
-    rust-channel: "stable"
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/ # Otherwise the DESTDIR is relative to $SNAPCRAFT_PART_INSTALL/usr/local/
   bitstream-data:
     plugin: dump
     source: https://github.com/Xilinx/kria-base-firmware
     source-type: git
     override-build: |
-      mkdir -p $SNAPCRAFT_PART_INSTALL/data/k26-starter-kits
-      cp k26_starter_kits/k26_starter_kits.bit $SNAPCRAFT_PART_INSTALL/data/k26-starter-kits/
-      cp LICENSE-BINARIES $SNAPCRAFT_PART_INSTALL/data/k26-starter-kits/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/data/k24-starter-kits
+      cp k24_starter_kits/k24_starter_kits.bit $SNAPCRAFT_PART_INSTALL/data/k24-starter-kits/
+      cp LICENSE-BINARIES $SNAPCRAFT_PART_INSTALL/data/k24-starter-kits/
