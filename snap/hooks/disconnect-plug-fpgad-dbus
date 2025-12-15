@@ -2,8 +2,6 @@
 
 set -e
 
-echo "disabling <provider-app> on startup"
-# if names of <provider-snap> == <provider-app> then `<provider-snap>` is enough here,
-# instead of <provider-snap>.<provider-app>
-snapctl stop <provider-snap>.<provider-app> --disable
-echo "<provider-app> disabled on startup"
+echo "disabling k24-default-bitstreams on startup"
+snapctl stop k24-default-bitstreams --disable
+echo "k24-default-bitstreams disabled on startup"
