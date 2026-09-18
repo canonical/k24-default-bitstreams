@@ -114,7 +114,7 @@ sudo apt install libglib2.0-0 # for usage
 
 There are alternative dbus libraries for C++ available such as [sdbus-c++](https://github.com/Kistler-Group/sdbus-cpp)
 or [dbus-cxx](https://dbus-cxx.github.io/), but the prior requires extra plugs (such as network-bind) in order to make a
-connection, and the latter is not available as prebuilt binaries (not available oin the Ubuntu Archive).
+connection, and the latter is not available as prebuilt binaries (not available in the Ubuntu Archive).
 
 ## snapcraft.yaml dependencies
 
