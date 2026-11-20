@@ -42,6 +42,7 @@
 
 # CMake outputs
 */cmake-build-*/**
+build/
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
@@ -51,3 +52,4 @@
 .idea/
 sandbox/**
 *.snap
+.vscode/

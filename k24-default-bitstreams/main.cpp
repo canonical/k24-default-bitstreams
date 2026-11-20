@@ -16,14 +16,14 @@ static const char *SERVICE_NAME = "com.canonical.fpgad";
 static const char *OBJECT_PATH = "/com/canonical/fpgad/control";
 static const char *INTERFACE_NAME = "com.canonical.fpgad.control";
 
-std::string call_set_flags(GDBusConnection *connection, const std::string &platform, const std::string &device,
-                           uint32_t flags) {
+std::string call_set_flags(GDBusConnection *connection, const std::string &sub_cmd, const std::string &device,
+                           const std::string& value) {
     GError *error = nullptr;
 
     GVariant *result = g_dbus_connection_call_sync(
             connection, SERVICE_NAME, OBJECT_PATH, INTERFACE_NAME,
-            "SetFpgaFlags", // method
-            g_variant_new("(ssu)", platform.c_str(), device.c_str(), flags), // input arguments
+            "XlnxSys", // method
+            g_variant_new("(sss)", sub_cmd.c_str(), device.c_str(), value.c_str()), // input arguments
             G_VARIANT_TYPE("(s)"), // reply type signature (single string)
             G_DBUS_CALL_FLAGS_NONE,
             10000, // timeout msec
@@ -35,7 +35,7 @@ std::string call_set_flags(GDBusConnection *connection, const std::string &platf
         const std::string errMsg = error ? error->message : "Unknown D-Bus error";
         if (error)
             g_error_free(error);
-        std::cerr << "D-Bus error in SetFpgaFlags: " << errMsg << std::endl;
+        std::cerr << "D-Bus error in XlnxSys: " << errMsg << std::endl;
         exit(1);
     }
 
@@ -90,9 +90,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     {
-        std::cout << "Calling SetFpgaFlags...\n";
-        const std::string reply = call_set_flags(conn, "xlnx", "fpga0", 0u);
-        std::cout << "SetFpgaFlags reply: " << reply << "\n";
+        std::cout << "Calling XlnxSys write_flags subcommand...\n";
+        const std::string reply = call_set_flags(conn, "write_flags", "fpga0", "0x0");
+        std::cout << "XlnxSys write_flags reply: " << reply << "\n";
     }
     {
         std::cout << "Calling WriteBitstreamDirect...\n";
